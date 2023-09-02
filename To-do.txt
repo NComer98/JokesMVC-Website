@@ -1,0 +1,9 @@
+DONE 0) Tie users to jokes.
+DONE 1) Dynamic Search on Jokes page (maybe using ReactJS specifically)
+1.5) Server-side ReactJS to make initial call instant
+
+2) Upload to cloud and make public using Azure and GitHub
+3) Unit testing + RESTful
+4) Joke Rating feature + sort by highest rated
+5) Comments feature for jokes
+6) Ability to view user profile page

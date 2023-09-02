@@ -1,0 +1,53 @@
+﻿@model JokesWebAppMVC.Models.Joke
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Joke</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id" />
+            <div class="form-group">
+                <label asp-for="jokeSetUp" class="control-label"></label>
+                <input asp-for="jokeSetUp" class="form-control" />
+                <span asp-validation-for="jokeSetUp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="jokePunchline" class="control-label"></label>
+                <input asp-for="jokePunchline" class="form-control" />
+                <span asp-validation-for="jokePunchline" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="jokeUsername" class="control-label"></label>
+                <input asp-for="jokeUsername" readonly class="form-control" />
+            </div>
+
+            @if (Model.jokeUsername == @UserManager.GetUserAsync(User).Result.UserName || @UserManager.GetUserAsync(User).Result.UserName == "Admin")
+            {
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            } else
+            {
+                <div class="btn btn-danger rounded-pill px-3" style="pointer-events:none">Cannot edit another user's jokes.</div>
+            }
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href="/">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

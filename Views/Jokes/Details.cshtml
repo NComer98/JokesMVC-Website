@@ -1,0 +1,36 @@
+﻿@model JokesWebAppMVC.Models.Joke
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Joke</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.jokeSetUp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.jokeSetUp)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.jokePunchline)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.jokePunchline)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.jokeUsername)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.jokeUsername)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> |
+    <a href="/">Back to List</a>
+</div>
