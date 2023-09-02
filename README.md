@@ -1,6 +1,6 @@
 # Jokes MVC Website Demonstration With Screenshots and Gif Below:
 
-A project I designed to practice ASP.NET MVC Core and ReactJS. It uses Entity Framework to interface with Microsoft SQL Server. This website offers a database of jokes, which logged-in users can interact with (CREATE, READ, UPDATE, DELETE). 
+This is a project I designed to practice ASP.NET MVC Core and ReactJS. It uses Entity Framework to interface with Microsoft SQL Server. This website offers a database of jokes, which logged-in users can interact with (CREATE, READ, UPDATE, DELETE). 
 <br /> <br />
 This readme provides a tour of the website's functionality.
 
