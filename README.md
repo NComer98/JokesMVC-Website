@@ -15,7 +15,7 @@ On the home page, the website uses <b>server-side ReactJS scripting</b> to popul
 Then, the user can search the database both by the "jokeSetup" column and by the "jokeUsername" column. Typing either into the search bar will work. The table will <b>dynamically update</b> as the user types, courtesy of ReactJS.
 <br />
 
-<img src = "/demo/images/Dynamic Search Functionality.gif" />
+<img src = "/demo/images/Dynamic Search Functionality.gif" /> <br />
 Above image: GIF video demonstration of dynamic search functionality.
 <br /> <br />
 Searching can be done while logged-out. However, to alter the database in any way, the user must be logged-in.
@@ -24,30 +24,47 @@ Searching can be done while logged-out. However, to alter the database in any wa
 Using the <i>IdentityUser</i> and <i>[Authenticate]</i> functionality provided by the ASP.NET MVC Core framework, access is restricted to the database. Clicking on CREATE,EDIT, or DELETE options will automatically take the user to the log-in page.
 <br /> <br />
 The log-in and register pages have form validation and security measures automatically provided by ASP.NET MVC Core framework. The default template has been slightly modified to allow for a username to be stored.
-<img src = "/demo/images/log-in.png" />
+<br />
+<img src = "/demo/images/log-in.png" /> <br />
 Above image: Log-in page
-<img src = "/demo/images/register with validation.png" />
+<br />
+<img src = "/demo/images/register with validation.png" /> <br />
 Above image: Register page showing form validation
 <br /> <br />
 Once logged-in the navbar will display the user's username, and the user will be able to modify some aspects of the database.
-<img src = "/demo/images/logged-in home page.png" />
+<br /> <img src = "/demo/images/logged-in home page.png" /> <br />
 Above image: The current user's username is displayed at the top-right of the screen.
 
 # User Database Modification
 Users can create jokes.
-<img src = "/demo/images/joke create.png" />
+<br /><img src = "/demo/images/joke create.png" /> <br />
 Above image: Joke create form.
 <br /> <br />
 Users can view joke details, which is how they can see the punchline of jokes.
-<img src = "/demo/images/joke details.png" />
+<br /> <img src = "/demo/images/joke details.png" /> <br />
 Above image: Joke details page.
 <br /> <br />
 Users can edit jokes, but ONLY if they created the joke that they're trying to edit.
-<img src = "/demo/images/joke edit invalid.png" />
+<br /> <img src = "/demo/images/joke edit invalid.png" /> <br />
 Above image: Attempting to edit someone else's joke will not work.
 <br /> <br />
 Users can delete jokes, but ONLY if they created the joke that they're trying to delete.
-<img src = "/demo/images/joke delete.png" />
+<br /> <img src = "/demo/images/joke delete.png" /> <br />
 Above image: Joke delete form when the user made the joke.
-<img src = "/demo/images/joke delete invalid.png" />
+<br /> <br />
+<img src = "/demo/images/joke delete invalid.png" /> <br />
 Above image: Joke delete form when the user did NOT make the joke.
+
+# Interactive To-Do List
+Using ReactJS and TypeScript, I implemented a simple interactive to-do list. It is not tied to user accounts.
+<br /> <img src = "/demo/images/to-do-list.png" /> <br />
+Above image: To-do list
+<br /> <br />
+Users can edit, delete, or mark tasks as completed. Tasks will automatically be displayed in either of the two lists based on their completion status.
+<br /> <img src = "/demo/images/to-do-list editing.png" /> <br />
+Above image: Editing a task
+<br /> <br />
+The display for the to-do list will dynamically change based on the user's screen-size for increased readability.
+<br /> <img src = "/demo/images/to-do-list small screen.png" /> <br />
+Above image: Small screen version of to-do list. Also note that the nav-bar links become collapsible via the top-right button if the screen is small enough.
+<br /> <br />
