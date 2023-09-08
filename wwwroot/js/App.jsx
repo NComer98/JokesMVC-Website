@@ -79,7 +79,7 @@ class JokesTable extends React.Component {
                 <p>
                     <a href="/jokes/create/">Create new</a>
                 </p>
-                <input type="text" className='search-joke-box' placeholder='Search Jokes' onChange={this.searchHandle.bind(this)} />
+                <input type="text" className='search-joke-box form-control' placeholder='Search Jokes' onChange={this.searchHandle.bind(this)} />
                 <table className="table">
                     <thead>
                         <tr>

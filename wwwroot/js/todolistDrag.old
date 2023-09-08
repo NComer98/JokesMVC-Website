@@ -1,0 +1,214 @@
+import React, { useState } from "react";
+import { DragDropContext, DropResult, Droppable, Draggable } from "react-beautiful-dnd";
+
+interface Props {
+    todo: string,
+    setTodo: React.Dispatch<React.SetStateAction<string>>,
+    handleAdd: (e: React.FormEvent) => void;
+}
+
+interface Todo {
+    id: number,
+    task: string,
+    isDone: boolean;
+}
+
+type SingleTodoProps = {
+    index: number;
+    todo: Todo,
+    todoArray: Todo[],
+    setTodoArray: React.Dispatch<React.SetStateAction<Todo[]>>,
+
+}
+
+const SingleTodo: React.FC<SingleTodoProps> = ({index, todo, todoArray, setTodoArray }) => {
+    const [edit, setEdit] = React.useState<boolean>(false);
+    const [editTodo, setEditTodo] = React.useState<string>(todo.task);
+
+    const inputRef = React.useRef<HTMLInputElement>(null);
+    React.useEffect(() => {
+        inputRef.current?.focus();
+    }, [edit]);
+
+    const handleEdit = (e: React.FormEvent, id: number) => {
+        e.preventDefault();
+        setTodoArray(todoArray.map((todo) => todo.id == id ? { ...todo, task: editTodo } : todo));
+        setEdit(false);
+    }
+
+    const handleDone = (id: number) => {
+        setTodoArray(todoArray.map((todo) => todo.id == id ? { ...todo, isDone: !todo.isDone } : todo))
+    };
+
+    const handleDelete = (id: number) => {
+        setTodoArray(todoArray.filter((todo) => todo.id != id));
+    }
+
+    React.useEffect(() => {
+        inputRef.current?.focus()
+    }, [edit])
+
+    const inputRef = React.useRef<HTMLInputElement>(null);
+
+    return (
+        <Draggable draggableId={todo.id.toString()} index={index}>
+            {(provided) => (
+                <form className="todos__single" onSubmit={(e) => handleEdit(e, todo.id)}>
+                    <span className="todos__single--text">
+                        {edit ? (
+                            <span>
+                                <input ref={inputRef} value={editTodo} onChange={(e) => setEditTodo(e.target.value)} className="todos__single--input" />
+                                <input type="submit" value="Done" className="btn btn-primary" />
+                            </span>
+                        ) : (
+                            <span> {todo.task}</span>
+                        )
+                        }
+
+                        <span className="todos__single--iconspan">
+                            <i className="fa-solid fa-pencil" onClick={() => {
+                                if (!edit && !todo.isDone) {
+                                    setEdit(!edit);
+                                }
+                            }}></i>
+                            <i className="fa-solid fa-trash" onClick={() => handleDelete(todo.id)}></i>
+                            <i className="fa-solid fa-check" onClick={() => handleDone(todo.id)}></i>
+                        </span>
+                    </span>
+                </form >
+            )}
+        </Draggable>
+    )
+}
+
+interface TodoArrayProps {
+    todoArray: Array<Todo>,
+    setTodoArray: React.Dispatch<React.SetStateAction<Todo[]>>,
+    completedTodos: Array<Todo>,
+    setCompletedTodos: React.Dispatch<React.SetStateAction<Todo[]>>
+}
+
+const TodoArray: React.FC<TodoArrayProps> = ({ todoArray, setTodoArray, completedTodos, setCompletedTodos }) => {
+    return (
+        <div className="container-fluid tasks-container">
+            <Droppable droppableId="TodosList">
+                {(provided, snapshot) => (
+                    <div className="todos" ref={provided.innerRef}
+                        {...provided.droppableProps}>
+                        <h4>Active Tasks</h4>
+                        {
+                            todoArray.map((todo, index) => (<SingleTodo
+                                index={index}
+                                todo={todo}
+                                todoArray={todoArray}
+                                key={todo.id}
+                                setTodoArray={setTodoArray} />))
+                        }
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Droppable>
+            <Droppable droppableId="TodosRemove">
+                {(provided, snapshot) => (
+                    <div className="todos remove" ref={provided.innerRef}
+                        {...provided.droppableProps}>
+                        <h4>Completed Tasks</h4>
+                        {
+                            todoArray.map((todo, index) => (<SingleTodo
+                                index={index}
+                                todo={todo}
+                                todoArray={completedTodos}
+                                key={todo.id}
+                                setTodoArray={setCompletedTodos} />))
+                        }
+                        {provided.placeholder}
+                    </div>)}
+            </Droppable>
+        </div>
+    );
+}
+
+const InputField: React.FC<Props> = ({ todo, setTodo, handleAdd }) => {
+    return (
+        <form className='input input-group' onSubmit={handleAdd}>
+            <input
+                type="input"
+                placeholder="Enter task."
+                className="form-control input__box"
+                value={todo}
+                onChange={(e) => setTodo(e.target.value)} />
+            <button type="submit" className="input__submit btn btn-primary">Add</button>
+        </form>
+    )
+}
+
+const Todolist: React.FC = () => {
+    const [todo, setTodo] = React.useState<string>("");
+    const [todoArray, setTodoArray] = React.useState<Todo[]>([]);
+    const [completedTodos, setCompletedTodos] = React.useState<Todo[]>([]);
+
+    const handleAdd = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (todo) {
+            setTodoArray([...todoArray, { id: Date.now(), task: todo, isDone: false }]);
+            setTodo("");
+        }
+    }
+
+    const onDragEnd = (result: DropResult) => {
+        const { destination, source } = result;
+
+        if (!destination) {
+            return;
+        }
+
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return;
+        }
+
+        let add;
+        let active = todoArray;
+        let complete = completedTodos;
+        // Source Logic
+        if (source.droppableId === "TodosList") {
+            add = active[source.index];
+            active.splice(source.index, 1);
+        } else {
+            add = complete[source.index];
+            complete.splice(source.index, 1);
+        }
+
+        // Destination Logic
+        if (destination.droppableId === "TodosList") {
+            active.splice(destination.index, 0, add);
+        } else {
+            complete.splice(destination.index, 0, add);
+        }
+
+        setCompletedTodos(complete);
+        setTodoArray(active);
+    };
+
+    return (
+        <DragDropContext onDragEnd={onDragEnd}>
+            <div className="container-fluid todolist">
+                <h1 className="heading">To-do List</h1>
+                <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
+                <TodoArray todoArray={todoArray} setTodoArray={setTodoArray} />
+            </div>
+        </DragDropContext>
+    );
+};
+
+//const todolist: React.FC = () => { }
+
+/*ReactDOM.render(
+    <Todolist />,
+    document.getElementById("content")
+);*/
+
+export default Todolist;

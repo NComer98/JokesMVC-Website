@@ -20,3 +20,75 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.todos {
+    width: 49.5%;
+    flex-direction:column;
+    padding:15px;
+    border-radius:5px;
+    background-color:lightgreen;
+}
+
+.todos h4 {
+    text-align:center;
+}
+
+.todos__single {
+    display:flex;
+    border: 5px solid blue;
+    padding: 20px;
+    margin-top: 15px;
+    background-color:white;
+    transition: 0.2s;
+}
+
+.todos__single:hover {
+    box-shadow: 0 0 5px black;
+    transform: scale(1.03);
+}
+
+.todos__single--text {
+    flex: 1;
+    font-size: 20px;
+    border: none;
+    text-align:left;
+}
+
+.todos__single--iconspan {
+    float:right;
+}
+
+.todos__single--iconspan i {
+    padding:5px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.todos__single--iconspan i:hover {
+    
+    transform: scale(1.5);
+}
+
+.tasks-container {
+    display:flex;
+    justify-content:space-between;
+    align-items: flex-start;
+    margin-top:15px;
+}
+
+.remove {
+    background-color:salmon;
+}
+
+@media (max-width:1000px) {
+    
+    .todos {
+        width:95%;
+        margin-bottom:10px;
+    }
+    
+    .tasks-container {
+        flex-direction: column;
+        width: 95%;
+    }
+}
